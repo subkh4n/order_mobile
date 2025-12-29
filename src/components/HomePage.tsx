@@ -1,5 +1,5 @@
 // =========================================
-// HomePage Component - Premium Eye-Catching Design
+// HomePage Component - FlavorDash Design Pattern
 // =========================================
 
 import React, { useEffect, useState } from "react";
@@ -43,6 +43,26 @@ function getImageUrl(url?: string): string | undefined {
 
 const ITEMS_PER_PAGE = 6;
 
+// Category icons mapping
+const categoryIcons: Record<string, string> = {
+  Food: "🍔",
+  Drinks: "🥤",
+  Snack: "🍿",
+  Dessert: "🍰",
+  Nasi: "🍚",
+  Mie: "🍜",
+  Ayam: "🍗",
+  Seafood: "🦐",
+  Minuman: "☕",
+  Extra: "🎁",
+  Donasi: "❤️",
+  Services: "🛎️",
+  default: "🍽️",
+};
+
+const getCategoryIcon = (name: string) =>
+  categoryIcons[name] || categoryIcons["default"];
+
 export default function HomePage() {
   const $products = useStore(filteredProducts);
   const $isLoading = useStore(isLoading);
@@ -66,25 +86,6 @@ export default function HomePage() {
     loadCategories();
   }, []);
 
-  // Category icons
-  const categoryIcons: Record<string, string> = {
-    Food: "🍔",
-    Drinks: "🥤",
-    Snack: "🍿",
-    Dessert: "🍰",
-    Nasi: "🍚",
-    Mie: "🍜",
-    Ayam: "🍗",
-    Seafood: "🦐",
-    Minuman: "☕",
-    Extra: "🎁",
-    Donasi: "❤️",
-    Services: "🛎️",
-    default: "🍽️",
-  };
-
-  const getCategoryIcon = (name: string) =>
-    categoryIcons[name] || categoryIcons["default"];
   const featuredProduct = $allProducts.find(
     (p) => p.available !== false && p.image
   );
@@ -99,8 +100,8 @@ export default function HomePage() {
   if ($isLoading) {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="w-12 h-12 border-4 border-orange-500 border-t-transparent rounded-full animate-spin" />
-        <p className="text-gray-400 mt-4">Memuat menu...</p>
+        <div className="w-12 h-12 border-4 border-[var(--accent)] border-t-transparent rounded-full animate-spin" />
+        <p className="text-[var(--text-muted)] mt-4">Memuat menu...</p>
       </div>
     );
   }
@@ -109,11 +110,11 @@ export default function HomePage() {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
         <span className="text-5xl mb-4">😔</span>
-        <p className="text-red-400 font-semibold">Gagal memuat menu</p>
-        <p className="text-gray-500 text-sm mt-1 mb-4">{$error}</p>
+        <p className="text-[var(--error)] font-semibold">Gagal memuat menu</p>
+        <p className="text-[var(--text-muted)] text-sm mt-1 mb-4">{$error}</p>
         <button
           onClick={() => loadProducts()}
-          className="px-6 py-3 bg-orange-500 text-white rounded-2xl font-semibold"
+          className="px-6 py-3 bg-[var(--accent)] text-[var(--text-inverse)] rounded-2xl font-semibold"
         >
           Coba Lagi
         </button>
@@ -122,18 +123,45 @@ export default function HomePage() {
   }
 
   return (
-    <div className="space-y-5">
+    <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {/* ========== HEADER ========== */}
+      <div className="flex items-center justify-between">
+        <div className="flex flex-col">
+          <div className="flex items-center gap-1 text-[var(--accent)] mb-0.5">
+            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+            </svg>
+            <span className="text-xs font-semibold uppercase">
+              Order Mobile
+            </span>
+          </div>
+          <h2 className="text-2xl font-bold leading-tight text-[var(--text-primary)]">
+            {$customer?.name
+              ? `Halo, ${$customer.name.split(" ")[0]}!`
+              : "Menu Hari Ini"}
+          </h2>
+        </div>
+        <button className="p-2.5 rounded-full bg-[var(--bg-tertiary)] hover:bg-[var(--bg-elevated)] transition-colors">
+          <svg
+            className="w-6 h-6 text-[var(--text-primary)]"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+            />
+          </svg>
+        </button>
+      </div>
+
       {/* ========== SEARCH BAR ========== */}
-      <div className="relative">
-        <input
-          type="search"
-          placeholder="What are you craving?"
-          value={$searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full h-12 pl-12 pr-14 rounded-2xl bg-[#1A1A1A] border-2 border-[#262626] text-white placeholder:text-gray-500 focus:outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all duration-300 text-sm"
-        />
+      <div className="flex w-full h-12 rounded-xl bg-[var(--bg-secondary)] border border-[var(--border-light)] items-center px-4 shadow-sm">
         <svg
-          className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500"
+          className="w-5 h-5 text-[var(--text-muted)]"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -145,9 +173,16 @@ export default function HomePage() {
             d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
           />
         </svg>
-        <button className="absolute right-2.5 top-1/2 -translate-y-1/2 w-8.5 h-8.5 rounded-xl bg-orange-500 flex items-center justify-center shadow-lg shadow-orange-500/40 hover:scale-105 active:scale-95 transition-transform duration-200">
+        <input
+          type="search"
+          value={$searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none text-sm px-3 text-[var(--text-primary)] placeholder:text-[var(--text-muted)]"
+          placeholder="Cari menu favoritmu..."
+        />
+        <button className="w-8 h-8 rounded-lg bg-[var(--accent)] flex items-center justify-center shadow-lg shadow-[var(--accent)]/30 hover:scale-105 active:scale-95 transition-transform">
           <svg
-            className="w-3.5 h-3.5 text-white"
+            className="w-4 h-4 text-[var(--text-inverse)]"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -163,36 +198,33 @@ export default function HomePage() {
       </div>
 
       {/* ========== PROMO BANNER ========== */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#1A1A1A] to-[#262626] min-h-[145px] border border-[#333]">
-        {/* Background Image */}
-        {featuredProduct?.image && !bannerImgError && (
+      <div className="relative w-full overflow-hidden rounded-2xl shadow-lg aspect-[2/1]">
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent z-10"></div>
+        {featuredProduct?.image && !bannerImgError ? (
           <img
             src={getImageUrl(featuredProduct.image)}
             alt={featuredProduct.name}
-            className="absolute right-0 top-0 w-3/5 h-full object-cover opacity-75"
+            className="absolute inset-0 w-full h-full object-cover"
             onError={() => setBannerImgError(true)}
           />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)] to-[var(--accent-active)]" />
         )}
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#1A1A1A] via-[#1A1A1A]/90 to-transparent" />
-
-        {/* Content */}
-        <div className="relative z-10 p-5 h-full flex flex-col justify-center">
-          <span className="self-start px-2 py-0.5 bg-orange-500 rounded-md text-[9px] font-bold text-white uppercase tracking-wider mb-2 shadow-lg shadow-orange-500/30">
-            Daily Special
+        <div className="absolute bottom-0 left-0 w-full z-20 p-5">
+          <span className="inline-block bg-[var(--accent)] text-[var(--text-inverse)] text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider mb-2 shadow-lg shadow-[var(--accent)]/30">
+            30% OFF
           </span>
-          <h2 className="text-lg font-extrabold text-white leading-tight mb-0.5">
-            30% OFF -{" "}
-            {featuredProduct?.name?.split(" ").slice(0, 2).join(" ") || "Menu"}
-          </h2>
-          <p className="text-xs text-gray-400 mb-2.5">Limited time offer</p>
-          <a
-            href="#popular"
-            className="self-start inline-flex items-center gap-1.5 text-orange-400 text-[13px] font-bold hover:text-orange-300 transition-colors group"
+          <h3 className="text-white text-xl font-bold">
+            {featuredProduct?.name?.split(" ").slice(0, 3).join(" ") ||
+              "Menu Spesial"}
+          </h3>
+          <button
+            onClick={() => setCategory(null)}
+            className="mt-2 bg-white text-[var(--accent)] px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-1 hover:bg-gray-100 transition-colors"
           >
-            Order Now
+            Lihat Menu
             <svg
-              className="w-3 h-3 group-hover:translate-x-1 transition-transform"
+              className="w-3.5 h-3.5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -204,32 +236,34 @@ export default function HomePage() {
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
 
       {/* ========== CATEGORIES ========== */}
       <section>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-base font-bold text-white">Categories</h2>
+          <h2 className="text-lg font-bold text-[var(--text-primary)]">
+            Kategori
+          </h2>
           <button
             onClick={() => setCategory(null)}
-            className="text-[11px] text-orange-400 font-semibold hover:text-orange-300 transition-colors"
+            className="text-xs text-[var(--accent)] font-semibold hover:text-[var(--accent-hover)] transition-colors"
           >
-            See all
+            Lihat semua
           </button>
         </div>
-        <div className="flex gap-2.5 overflow-x-auto pb-1.5 scrollbar-hide -mx-1 px-1">
+        <div className="flex gap-3 overflow-x-auto pb-2 hide-scrollbar -mx-1 px-1">
           {$categories.slice(0, 6).map((cat) => (
             <button
               key={cat.name}
               onClick={() =>
                 setCategory($selectedCategory === cat.name ? null : cat.name)
               }
-              className={`flex items-center gap-1.5 px-3.5 py-2 rounded-full whitespace-nowrap transition-all duration-300 text-[11px] font-bold border-2 ${
+              className={`flex items-center gap-2 px-4 py-2.5 rounded-full whitespace-nowrap transition-all duration-300 text-xs font-bold border-2 shrink-0 ${
                 $selectedCategory === cat.name
-                  ? "bg-orange-500 text-white border-orange-500 shadow-lg shadow-orange-500/20 scale-105"
-                  : "bg-transparent text-gray-300 border-[#333] hover:border-orange-500 hover:text-white"
+                  ? "bg-[var(--accent)] text-[var(--text-inverse)] border-[var(--accent)] shadow-lg shadow-[var(--accent)]/20 scale-105"
+                  : "bg-transparent text-[var(--text-secondary)] border-[var(--border-default)] hover:border-[var(--accent)] hover:text-[var(--text-primary)]"
               }`}
             >
               <span className="text-sm">{getCategoryIcon(cat.name)}</span>
@@ -239,21 +273,21 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ========== POPULAR NOW ========== */}
+      {/* ========== PRODUCTS GRID ========== */}
       <section id="popular">
-        <div className="flex items-center justify-between mb-3.5">
-          <h2 className="text-base font-bold text-white">
-            {$selectedCategory || "Popular Now"}
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-bold text-[var(--text-primary)]">
+            {$selectedCategory || "Menu Populer"}
           </h2>
         </div>
 
         {$products.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-16 text-center">
             <span className="text-5xl mb-4">🍽️</span>
-            <p className="text-gray-400">
+            <p className="text-[var(--text-muted)]">
               {$searchQuery || $selectedCategory
-                ? "No items found"
-                : "No menu available"}
+                ? "Tidak ada menu ditemukan"
+                : "Belum ada menu tersedia"}
             </p>
           </div>
         ) : (
@@ -282,8 +316,8 @@ export default function HomePage() {
                   disabled={currentPage === 1}
                   className={`w-10 h-10 rounded-xl flex items-center justify-center text-base font-bold transition-all duration-200 ${
                     currentPage === 1
-                      ? "bg-[#1A1A1A] text-gray-600"
-                      : "bg-[#262626] text-white hover:bg-orange-500"
+                      ? "bg-[var(--bg-tertiary)] text-[var(--text-muted)]"
+                      : "bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--accent)]"
                   }`}
                 >
                   ‹
@@ -303,8 +337,8 @@ export default function HomePage() {
                       onClick={() => setCurrentPage(pageNum)}
                       className={`w-10 h-10 rounded-xl flex items-center justify-center text-sm font-bold transition-all duration-200 ${
                         currentPage === pageNum
-                          ? "bg-orange-500 text-white shadow-lg shadow-orange-500/40 scale-110"
-                          : "bg-[#262626] text-gray-400 hover:text-white hover:bg-[#333]"
+                          ? "bg-[var(--accent)] text-[var(--text-inverse)] shadow-lg shadow-[var(--accent)]/40 scale-110"
+                          : "bg-[var(--bg-secondary)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-tertiary)]"
                       }`}
                     >
                       {pageNum}
@@ -319,8 +353,8 @@ export default function HomePage() {
                   disabled={currentPage === totalPages}
                   className={`w-10 h-10 rounded-xl flex items-center justify-center text-base font-bold transition-all duration-200 ${
                     currentPage === totalPages
-                      ? "bg-[#1A1A1A] text-gray-600"
-                      : "bg-[#262626] text-white hover:bg-orange-500"
+                      ? "bg-[var(--bg-tertiary)] text-[var(--text-muted)]"
+                      : "bg-[var(--bg-secondary)] text-[var(--text-primary)] hover:bg-[var(--accent)]"
                   }`}
                 >
                   ›

@@ -1,5 +1,5 @@
 // =========================================
-// ProductCard Component - Dark Theme
+// ProductCard Component - FlavorDash Design Pattern
 // =========================================
 
 import React, { useState } from "react";
@@ -15,21 +15,18 @@ interface ProductCardProps {
   category?: string;
   stock?: number;
   available?: boolean;
+  isHealthy?: boolean;
 }
 
 // Helper to convert Google Drive URLs to viewable format
-// Based on: docs/GOOGLE_DRIVE_IMAGES.md
 function getImageUrl(url?: string): string | undefined {
   if (!url) return undefined;
 
-  // Already using lh3 format - most reliable
   if (url.includes("lh3.googleusercontent.com")) {
     return url;
   }
 
-  // Already in uc?export format
   if (url.includes("uc?export=view")) {
-    // Convert to lh3 format for better reliability
     const match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
     if (match) {
       return `https://lh3.googleusercontent.com/d/${match[1]}`;
@@ -37,31 +34,23 @@ function getImageUrl(url?: string): string | undefined {
     return url;
   }
 
-  // Extract file ID from various Google Drive formats
   let fileId: string | null = null;
 
-  // Format 1: https://drive.google.com/file/d/FILE_ID/view
   if (url.includes("drive.google.com/file/d/")) {
     const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
     fileId = match ? match[1] : null;
-  }
-  // Format 2: https://drive.google.com/open?id=FILE_ID
-  else if (url.includes("drive.google.com/open?id=")) {
+  } else if (url.includes("drive.google.com/open?id=")) {
     const match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
     fileId = match ? match[1] : null;
-  }
-  // Format 3: https://drive.google.com/thumbnail?id=FILE_ID
-  else if (url.includes("drive.google.com/thumbnail?id=")) {
+  } else if (url.includes("drive.google.com/thumbnail?id=")) {
     const match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
     fileId = match ? match[1] : null;
   }
 
   if (fileId) {
-    // Use lh3 format - more reliable for embedding
     return `https://lh3.googleusercontent.com/d/${fileId}`;
   }
 
-  // Return original URL if not a Google Drive link (e.g., Unsplash)
   return url;
 }
 
@@ -72,6 +61,7 @@ export default function ProductCard({
   image,
   stock,
   available = true,
+  isHealthy = false,
 }: ProductCardProps) {
   const $cartItems = useStore(cartItems);
   const cartItem = $cartItems[id];
@@ -87,20 +77,27 @@ export default function ProductCard({
   };
 
   return (
-    <div className="group relative bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-light)] transition-all duration-300 hover:border-[var(--accent)] hover:shadow-lg hover:shadow-[var(--accent)]/10">
+    <div className="flex flex-col bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-light)] group transition-all duration-300 active:scale-[0.98] hover:border-[var(--accent)] hover:shadow-lg hover:shadow-[var(--accent)]/10">
       {/* Image Container */}
-      <div className="relative aspect-square overflow-hidden bg-[var(--bg-tertiary)]">
+      <div className="relative aspect-[4/3] overflow-hidden bg-[var(--bg-tertiary)]">
         {imageUrl && !imgError ? (
           <img
             src={imageUrl}
             alt={name}
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
             loading="lazy"
             onError={() => setImgError(true)}
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center text-4xl">
             🍽️
+          </div>
+        )}
+
+        {/* Healthy Badge */}
+        {isHealthy && (
+          <div className="absolute top-2 left-2 bg-[var(--success)]/90 text-white text-[8px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">
+            HEALTHY
           </div>
         )}
 
@@ -115,7 +112,7 @@ export default function ProductCard({
 
         {/* Quantity Badge */}
         {quantityInCart > 0 && (
-          <div className="absolute top-2 right-2 bg-[var(--accent)] text-[var(--text-inverse)] w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold animate-fadeIn">
+          <div className="absolute top-2 right-2 bg-[var(--accent)] text-[var(--text-inverse)] w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold animate-in zoom-in shadow-lg">
             {quantityInCart}
           </div>
         )}
@@ -123,27 +120,25 @@ export default function ProductCard({
 
       {/* Content */}
       <div className="p-3">
-        <h3 className="font-semibold text-[var(--text-primary)] text-xs line-clamp-2 mb-1.5 min-h-[2rem] leading-snug">
+        <h4 className="font-bold text-xs text-[var(--text-primary)] truncate mb-2">
           {name}
-        </h3>
-
-        <div className="flex items-center justify-between gap-1">
-          <span className="text-[var(--accent)] font-bold text-[13px]">
+        </h4>
+        <div className="flex justify-between items-center">
+          <span className="text-[var(--accent)] font-bold text-sm">
             {formatRupiah(price)}
           </span>
-
           <button
             onClick={handleAddToCart}
             disabled={isOutOfStock}
             className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-200 ${
               isOutOfStock
                 ? "bg-[var(--bg-tertiary)] text-[var(--text-muted)] cursor-not-allowed"
-                : "bg-[var(--accent)] text-[var(--text-inverse)] hover:scale-110 active:scale-95 shadow-lg shadow-[var(--accent)]/30"
+                : "bg-[var(--accent)] text-[var(--text-inverse)] hover:scale-110 active:scale-95 shadow-md shadow-[var(--accent)]/30"
             }`}
             aria-label={isOutOfStock ? "Stok habis" : "Tambah ke keranjang"}
           >
             <svg
-              className="w-3.5 h-3.5"
+              className="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

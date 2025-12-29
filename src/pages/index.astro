@@ -1,13 +1,13 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import HomePage from '../components/HomePage';
-import BottomNav from '../components/BottomNav';
+import Layout from "../layouts/Layout.astro";
+import HomePage from "../components/HomePage";
+import BottomNav from "../components/BottomNav";
 ---
 
 <Layout title="Order Mobile - Pesan Makanan Online">
-  <main class="min-h-screen pb-28 bg-[#0D0D0D]">
-    <!-- Content with improved padding for smaller devices -->
-    <div class="max-w-md mx-auto px-6 pt-6 pb-4">
+  <main class="min-h-screen pb-24 bg-[var(--bg-primary)]">
+    <!-- Content Container -->
+    <div class="max-w-md mx-auto px-4 pt-6">
       <HomePage client:load />
     </div>
   </main>
@@ -17,22 +17,25 @@ import BottomNav from '../components/BottomNav';
 </Layout>
 
 <style is:global>
-  /* Hide scrollbar */  
-  .scrollbar-hide::-webkit-scrollbar {
+  /* Hide scrollbar */
+  .scrollbar-hide::-webkit-scrollbar,
+  .hide-scrollbar::-webkit-scrollbar {
     display: none;
   }
-  .scrollbar-hide {
+  .scrollbar-hide,
+  .hide-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   /* Smooth transitions */
   * {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   }
-  
+
   /* Better touch targets */
-  button, a {
+  button,
+  a {
     -webkit-tap-highlight-color: transparent;
   }
 </style>
