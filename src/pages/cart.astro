@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CartPage from '../components/CartPage';
+import BottomNav from '../components/BottomNav';
+---
+
+<Layout title="Keranjang - Order Mobile">
+  <main class="min-h-screen pb-20">
+    <!-- Header -->
+    <header class="sticky top-0 z-10 bg-[var(--bg-primary)] border-b border-[var(--border-light)] safe-area-top">
+      <div class="px-4 py-4">
+        <div class="flex items-center gap-3">
+          <a href="/" class="w-10 h-10 flex items-center justify-center rounded-full bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </a>
+          <h1 class="text-xl font-bold text-[var(--text-primary)]">Keranjang</h1>
+        </div>
+      </div>
+    </header>
+
+    <!-- Cart Content -->
+    <CartPage client:load />
+  </main>
+
+  <!-- Bottom Navigation -->
+  <BottomNav client:load currentPage="cart" />
+</Layout>

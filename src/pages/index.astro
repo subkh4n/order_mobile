@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+import HomePage from '../components/HomePage';
+import BottomNav from '../components/BottomNav';
+---
+
+<Layout title="Order Mobile - Pesan Makanan Online">
+  <main class="min-h-screen pb-28 bg-[#0D0D0D]">
+    <!-- Content with improved padding for smaller devices -->
+    <div class="max-w-md mx-auto px-6 pt-6 pb-4">
+      <HomePage client:load />
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <BottomNav client:load currentPage="menu" />
+</Layout>
+
+<style is:global>
+  /* Hide scrollbar */  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  /* Smooth transitions */
+  * {
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Better touch targets */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+</style>
