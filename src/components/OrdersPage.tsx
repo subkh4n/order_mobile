@@ -13,27 +13,6 @@ import {
   type OnlineOrder,
 } from "@/lib/api";
 
-// Helper to convert Google Drive URLs
-function getImageUrl(url?: string): string | undefined {
-  if (!url) return undefined;
-  if (url.includes("lh3.googleusercontent.com")) return url;
-  if (url.includes("uc?export=view")) {
-    const match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    if (match) return `https://lh3.googleusercontent.com/d/${match[1]}`;
-    return url;
-  }
-  let fileId: string | null = null;
-  if (url.includes("drive.google.com/file/d/")) {
-    const match = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-    fileId = match ? match[1] : null;
-  } else if (url.includes("drive.google.com/open?id=")) {
-    const match = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
-    fileId = match ? match[1] : null;
-  }
-  if (fileId) return `https://lh3.googleusercontent.com/d/${fileId}`;
-  return url;
-}
-
 export default function OrdersPage() {
   const $customer = useStore(customer);
   const $isLoggedIn = useStore(isLoggedIn);
@@ -78,10 +57,9 @@ export default function OrdersPage() {
     order.items.forEach((item) => {
       for (let i = 0; i < item.qty; i++) {
         addToCart({
-          id: item.productId || item.name,
+          id: item.id,
           name: item.name,
           price: item.price,
-          image: item.image,
         });
       }
     });
@@ -224,17 +202,9 @@ export default function OrdersPage() {
                   key={idx}
                   className="w-10 h-10 rounded-full border-2 border-[var(--bg-secondary)] overflow-hidden bg-[var(--bg-tertiary)] flex-shrink-0"
                 >
-                  {item.image ? (
-                    <img
-                      src={getImageUrl(item.image)}
-                      className="w-full h-full object-cover"
-                      alt={item.name}
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-sm">
-                      🍽️
-                    </div>
-                  )}
+                  <div className="w-full h-full flex items-center justify-center text-sm">
+                    🍽️
+                  </div>
                 </div>
               ))}
               {order.items.length > 4 && (
