@@ -48,11 +48,10 @@ export default function RegisterPage() {
 
   return (
     <div className="flex-1 flex flex-col px-6 pb-12 safe-area-top">
-      {/* Header */}
-      <div className="flex items-center gap-4 mt-6 mb-10">
+      <div className="flex items-center gap-4 mt-8 mb-8">
         <a
           href="/login"
-          className="w-12 h-12 flex items-center justify-center rounded-2xl bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shadow-sm"
+          className="w-11 h-11 flex items-center justify-center rounded-2xl bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shadow-sm"
         >
           <svg
             className="w-6 h-6"
@@ -69,10 +68,10 @@ export default function RegisterPage() {
           </svg>
         </a>
         <div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)] tracking-tight">
+          <h1 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">
             Daftar Akun
           </h1>
-          <p className="text-sm text-[var(--text-secondary)] mt-0.5">
+          <p className="text-xs text-[var(--text-secondary)] mt-0.5 font-medium">
             Mulai pengalaman kulinermu
           </p>
         </div>
@@ -81,8 +80,14 @@ export default function RegisterPage() {
       {/* Register Form */}
       <form onSubmit={handleSubmit} className="flex-1 space-y-6">
         {$error && (
-          <div className="p-4 bg-[var(--error-bg)] border border-[var(--error)] rounded-2xl animate-in fade-in zoom-in duration-300">
-            <p className="text-sm text-[var(--error)] font-medium">{$error}</p>
+          <div
+            className={`p-4 rounded-2xl animate-in fade-in zoom-in duration-300 border ${
+              $error.toLowerCase().includes("berhasil")
+                ? "bg-[var(--success-bg)] border-[var(--success)] text-[var(--success)]"
+                : "bg-[var(--error-bg)] border-[var(--error)] text-[var(--error)]"
+            }`}
+          >
+            <p className="text-sm font-semibold text-center">{$error}</p>
           </div>
         )}
 

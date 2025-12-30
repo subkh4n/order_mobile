@@ -34,21 +34,24 @@ export default function LoginPage() {
     e.preventDefault();
     const success = await login(phone, password);
     if (success) {
-      window.location.href = "/";
+      // Small delay to allow store state to propagate
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 100);
     }
   };
 
   return (
     <div className="flex-1 flex flex-col px-6 pb-12 safe-area-top">
       {/* Logo / Brand */}
-      <div className="text-center mt-12 mb-12">
-        <div className="w-24 h-24 bg-[var(--accent)] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[var(--accent)]/20 animate-bounce-subtle">
-          <span className="text-5xl">🍽️</span>
+      <div className="text-center mt-10 mb-8">
+        <div className="w-20 h-20 bg-[var(--accent)] rounded-[24px] flex items-center justify-center mx-auto mb-5 shadow-xl shadow-[var(--accent)]/20 animate-bounce-subtle">
+          <span className="text-4xl">🍽️</span>
         </div>
-        <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">
+        <h1 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">
           Order Mobile
         </h1>
-        <p className="text-[var(--text-secondary)] mt-2 text-lg">
+        <p className="text-[var(--text-secondary)] mt-1.5 text-base font-medium">
           Masuk ke akunmu
         </p>
       </div>
@@ -56,37 +59,45 @@ export default function LoginPage() {
       {/* Login Form */}
       <form onSubmit={handleSubmit} className="space-y-6">
         {$error && (
-          <div className="p-4 bg-[var(--error-bg)] border border-[var(--error)] rounded-2xl animate-in fade-in zoom-in duration-300">
-            <p className="text-sm text-[var(--error)] font-medium">{$error}</p>
+          <div
+            className={`p-4 rounded-2xl animate-in fade-in zoom-in duration-300 border ${
+              $error.toLowerCase().includes("berhasil")
+                ? "bg-[var(--success-bg)] border-[var(--success)] text-[var(--success)]"
+                : "bg-[var(--error-bg)] border-[var(--error)] text-[var(--error)]"
+            }`}
+          >
+            <p className="text-sm font-semibold text-center">{$error}</p>
           </div>
         )}
 
-        <div className="space-y-2">
-          <label className="block text-sm font-semibold text-[var(--text-secondary)] ml-1">
-            Nomor HP
-          </label>
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            placeholder="08xxxxxxxxxx"
-            className="input text-lg py-4"
-            required
-          />
-        </div>
+        <div className="space-y-4">
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-[var(--text-secondary)] ml-1">
+              Nomor HP
+            </label>
+            <input
+              type="tel"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="08xxxxxxxxxx"
+              className="input text-base py-4"
+              required
+            />
+          </div>
 
-        <div className="space-y-2">
-          <label className="block text-sm font-semibold text-[var(--text-secondary)] ml-1">
-            Password
-          </label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Masukkan password"
-            className="input text-lg py-4"
-            required
-          />
+          <div className="space-y-2">
+            <label className="block text-sm font-semibold text-[var(--text-secondary)] ml-1">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Masukkan password"
+              className="input text-base py-4"
+              required
+            />
+          </div>
         </div>
 
         <button
