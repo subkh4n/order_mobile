@@ -47,7 +47,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col px-6 py-8 safe-area-top">
+    <div className="flex-1 flex flex-col px-5 pb-8 safe-area-top">
       {/* Header */}
       <div className="flex items-center gap-3 mb-8">
         <a

@@ -1,5 +1,6 @@
 import { atom } from "nanostores";
-import { submitOrder, type Order, type OrderItem } from "@/lib/api";
+import { createOnlineOrder, type OrderItem } from "@/lib/api";
+import { customer } from "./auth";
 
 // Order state
 export const customerName = atom("");
@@ -40,6 +41,7 @@ export async function processOrder(items: OrderItem[], total: number) {
   const table = tableNumber.get();
   const phone = phoneNumber.get();
   const notes = orderNotes.get();
+  const currentCustomer = customer.get();
 
   if (!name.trim()) {
     orderError.set("Nama pelanggan harus diisi");
@@ -55,23 +57,24 @@ export async function processOrder(items: OrderItem[], total: number) {
   orderError.set(null);
 
   try {
-    const order: Order = {
+    const result = await createOnlineOrder({
+      customerId: currentCustomer?.id || "GUEST",
       customerName: name,
-      tableNumber: table || undefined,
-      phoneNumber: phone || undefined,
+      customerPhone: phone || currentCustomer?.phone || "-",
       items,
-      total,
+      subtotal: total, // Assuming total is subtotal for now as tax is not calculated
+      tax: 0,
+      total: total,
+      paymentMethod: "COD",
       notes: notes || undefined,
-    };
+    });
 
-    const result = await submitOrder(order);
-
-    if (result.success) {
+    if (result.success && result.data) {
       orderSuccess.set(true);
-      orderId.set(result.orderId || null);
+      orderId.set(result.data.orderId || null);
       return true;
     } else {
-      orderError.set(result.message);
+      orderError.set(result.message || "Gagal memproses pesanan");
       return false;
     }
   } catch (err) {

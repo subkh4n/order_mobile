@@ -43,7 +43,7 @@ export default function ConfirmationPage() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="flex items-center justify-between px-4 py-4 safe-area-top">
+      <header className="flex items-center justify-between px-5 py-4 safe-area-top">
         <div />
         <a href="/" className="text-sm text-[var(--accent)] font-medium">
           Selesai
@@ -51,7 +51,7 @@ export default function ConfirmationPage() {
       </header>
 
       {/* Success Content */}
-      <div className="flex-1 flex flex-col items-center justify-center px-6 text-center">
+      <div className="flex-1 flex flex-col items-center justify-center px-5 text-center">
         {/* Success Icon */}
         <div className="w-20 h-20 bg-[var(--success)] rounded-full flex items-center justify-center mb-6 animate-bounce-subtle">
           <svg
@@ -181,7 +181,7 @@ export default function ConfirmationPage() {
       </div>
 
       {/* Bottom Actions */}
-      <div className="p-4 space-y-3 safe-area-bottom">
+      <div className="px-5 py-6 space-y-3 safe-area-bottom">
         <a
           href={`/track/${orderData.orderId}`}
           className="flex items-center justify-center w-full py-4 bg-[var(--accent)] text-[var(--text-inverse)] rounded-2xl font-bold text-lg gap-2"

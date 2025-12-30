@@ -133,7 +133,7 @@ export default function CheckoutPage() {
       onSubmit={handleSubmit}
       className="flex flex-col min-h-[calc(100vh-140px)]"
     >
-      <div className="flex-1 px-4 py-4 space-y-6">
+      <div className="flex-1 px-5 py-4 space-y-6">
         {/* Order Summary */}
         <section className="bg-[var(--bg-secondary)] rounded-2xl p-4 border border-[var(--border-light)]">
           <h2 className="font-bold text-[var(--text-primary)] mb-3">
@@ -271,7 +271,7 @@ export default function CheckoutPage() {
       </div>
 
       {/* Submit Section - Fixed Bottom */}
-      <div className="sticky bottom-16 bg-[var(--bg-secondary)] border-t border-[var(--border-default)] p-4 space-y-3 safe-area-bottom">
+      <div className="sticky bottom-16 bg-[var(--bg-secondary)] border-t border-[var(--border-default)] px-5 py-6 space-y-3 safe-area-bottom">
         {/* Total */}
         <div className="flex justify-between items-center">
           <span className="font-semibold text-[var(--text-primary)]">

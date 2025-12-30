@@ -39,7 +39,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-center px-6 py-12">
+    <div className="flex-1 flex flex-col justify-center px-5 py-12">
       {/* Logo / Brand */}
       <div className="text-center mb-10">
         <div className="w-20 h-20 bg-[var(--accent)] rounded-2xl flex items-center justify-center mx-auto mb-4">

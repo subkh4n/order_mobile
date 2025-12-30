@@ -123,7 +123,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex flex-col gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* ========== HEADER ========== */}
       <div className="flex items-center justify-between">
         <div className="flex flex-col">

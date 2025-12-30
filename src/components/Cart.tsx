@@ -53,9 +53,9 @@ export default function Cart() {
   const handleCheckout = async () => {
     const orderItems = items.map((item) => ({
       id: item.id,
-      nama: item.nama,
-      harga: item.harga,
-      quantity: item.quantity,
+      name: item.name,
+      price: item.price,
+      qty: item.quantity,
     }));
 
     const success = await processOrder(orderItems, total);
@@ -299,10 +299,10 @@ export default function Cart() {
                     className="flex items-center gap-4 p-3 bg-gray-50 rounded-xl"
                   >
                     <div className="w-16 h-16 rounded-lg overflow-hidden bg-green-100 flex-shrink-0">
-                      {item.gambar ? (
+                      {item.image ? (
                         <img
-                          src={item.gambar}
-                          alt={item.nama}
+                          src={item.image}
+                          alt={item.name}
                           className="w-full h-full object-cover"
                         />
                       ) : (
@@ -313,10 +313,10 @@ export default function Cart() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <h4 className="font-medium text-gray-800 truncate">
-                        {item.nama}
+                        {item.name}
                       </h4>
                       <p className="text-green-600 font-semibold">
-                        {formatRupiah(item.harga)}
+                        {formatRupiah(item.price)}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
