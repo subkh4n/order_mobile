@@ -98,6 +98,14 @@ async function apiPost<T>(
 
     // Normalize response format
     if (data.success !== undefined) {
+      // If data property is missing but success is true, wrap the rest as data
+      if (data.success && data.data === undefined) {
+        const { success, message, ...rest } = data;
+        // If there are other properties besides success/message, treat them as the payload
+        if (Object.keys(rest).length > 0) {
+          return { success: true, message: message as string, data: rest as T };
+        }
+      }
       return data as ApiResponse<T>;
     }
 

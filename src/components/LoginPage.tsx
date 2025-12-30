@@ -44,14 +44,14 @@ export default function LoginPage() {
   return (
     <div className="flex-1 flex flex-col px-6 pb-12 safe-area-top">
       {/* Logo / Brand */}
-      <div className="text-center mt-10 mb-8">
-        <div className="w-20 h-20 bg-[var(--accent)] rounded-[24px] flex items-center justify-center mx-auto mb-5 shadow-xl shadow-[var(--accent)]/20 animate-bounce-subtle">
-          <span className="text-4xl">🍽️</span>
+      <div className="text-center mt-14 mb-10">
+        <div className="w-16 h-16 bg-[var(--accent)] rounded-[20px] flex items-center justify-center mx-auto mb-4 shadow-lg shadow-[var(--accent)]/20 animate-bounce-subtle">
+          <span className="text-3xl">🍽️</span>
         </div>
         <h1 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">
           Order Mobile
         </h1>
-        <p className="text-[var(--text-secondary)] mt-1.5 text-base font-medium">
+        <p className="text-[var(--text-secondary)] mt-1 text-sm font-semibold opacity-80">
           Masuk ke akunmu
         </p>
       </div>

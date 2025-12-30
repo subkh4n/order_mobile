@@ -48,13 +48,13 @@ export default function RegisterPage() {
 
   return (
     <div className="flex-1 flex flex-col px-6 pb-12 safe-area-top">
-      <div className="flex items-center gap-4 mt-8 mb-8">
+      <div className="flex items-center gap-4 mt-12 mb-8">
         <a
           href="/login"
-          className="w-11 h-11 flex items-center justify-center rounded-2xl bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shadow-sm"
+          className="w-10 h-10 flex items-center justify-center rounded-xl bg-[var(--bg-tertiary)] text-[var(--text-primary)] hover:bg-[var(--bg-elevated)] transition-colors shadow-sm"
         >
           <svg
-            className="w-6 h-6"
+            className="w-5 h-5"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -71,7 +71,7 @@ export default function RegisterPage() {
           <h1 className="text-2xl font-black text-[var(--text-primary)] tracking-tight">
             Daftar Akun
           </h1>
-          <p className="text-xs text-[var(--text-secondary)] mt-0.5 font-medium">
+          <p className="text-[10px] text-[var(--accent)] mt-0.5 font-black uppercase tracking-widest opacity-90">
             Mulai pengalaman kulinermu
           </p>
         </div>
