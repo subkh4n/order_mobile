@@ -123,9 +123,9 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="flex flex-col gap-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* ========== HEADER ========== */}
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between mb-4">
         <div className="flex flex-col">
           <div className="flex items-center gap-1 text-[var(--accent)] mb-0.5">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

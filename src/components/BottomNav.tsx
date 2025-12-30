@@ -102,7 +102,9 @@ export default function BottomNav({ currentPage = "menu" }: BottomNavProps) {
   return (
     <nav
       className="fixed bottom-0 left-0 right-0 z-50 bg-[var(--bg-secondary)]/95 backdrop-blur-md border-t border-[var(--border-default)] pt-3 px-8 max-w-md mx-auto"
-      style={{ paddingBottom: "calc(1rem + var(--safe-area-bottom))" }}
+      style={{
+        paddingBottom: "calc(var(--space-6) + var(--safe-area-bottom))",
+      }}
     >
       <div className="flex justify-between items-center">
         {navItems.map((item) => {

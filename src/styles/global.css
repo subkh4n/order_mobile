@@ -6,12 +6,12 @@
 /* Import Google Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
 
-/* Import Design Tokens */
-@import "./design-tokens.css";
-
-/* Import Tailwind */
+/* Import Tailwind First for v4 */
 @import "tailwindcss";
 @import "tw-animate-css";
+
+/* Import Design Tokens */
+@import "./design-tokens.css";
 
 /* ===== Base Styles ===== */
 
@@ -134,15 +134,23 @@ input[type="search"]::-webkit-search-cancel-button {
   width: 100%;
   max-width: var(--container-md);
   margin-inline: auto;
-  padding-inline: var(--space-5);
+  padding-inline: var(--space-6);
+}
+
+.main-content-padding {
+  padding-inline: var(--space-8); /* Increased to 32px for clear visibility */
+  padding-top: calc(
+    var(--space-16) + var(--safe-area-top)
+  ); /* Increased to 64px */
+  border: 4px solid #ff0000 !important; /* TEMPORARY DEBUG BORDER */
 }
 
 .safe-area-top {
-  padding-top: calc(var(--safe-area-top) + var(--space-4));
+  padding-top: calc(var(--safe-area-top) + var(--space-6));
 }
 
 .safe-area-bottom {
-  padding-bottom: calc(var(--safe-area-bottom) + var(--space-4));
+  padding-bottom: calc(var(--safe-area-bottom) + var(--space-6));
 }
 
 /* ===== Page Layout ===== */
@@ -156,13 +164,12 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .page-content {
   flex: 1;
-  padding-bottom: calc(90px + var(--safe-area-bottom));
 }
 
 /* ===== Bottom Navigation Space ===== */
 
 .has-bottom-nav {
-  padding-bottom: calc(90px + var(--safe-area-bottom));
+  padding-bottom: calc(100px + var(--safe-area-bottom));
 }
 
 /* ===== Custom Scrollbar for Desktop ===== */
