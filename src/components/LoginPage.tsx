@@ -39,28 +39,30 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex-1 flex flex-col justify-center px-5 py-12">
+    <div className="flex-1 flex flex-col px-6 pb-12 safe-area-top">
       {/* Logo / Brand */}
-      <div className="text-center mb-10">
-        <div className="w-20 h-20 bg-[var(--accent)] rounded-2xl flex items-center justify-center mx-auto mb-4">
-          <span className="text-4xl">🍽️</span>
+      <div className="text-center mt-12 mb-12">
+        <div className="w-24 h-24 bg-[var(--accent)] rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-xl shadow-[var(--accent)]/20 animate-bounce-subtle">
+          <span className="text-5xl">🍽️</span>
         </div>
-        <h1 className="text-2xl font-bold text-[var(--text-primary)]">
+        <h1 className="text-3xl font-bold text-[var(--text-primary)] tracking-tight">
           Order Mobile
         </h1>
-        <p className="text-[var(--text-secondary)] mt-1">Masuk ke akunmu</p>
+        <p className="text-[var(--text-secondary)] mt-2 text-lg">
+          Masuk ke akunmu
+        </p>
       </div>
 
       {/* Login Form */}
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-6">
         {$error && (
-          <div className="p-4 bg-[var(--error-bg)] border border-[var(--error)] rounded-xl">
-            <p className="text-sm text-[var(--error)]">{$error}</p>
+          <div className="p-4 bg-[var(--error-bg)] border border-[var(--error)] rounded-2xl animate-in fade-in zoom-in duration-300">
+            <p className="text-sm text-[var(--error)] font-medium">{$error}</p>
           </div>
         )}
 
-        <div>
-          <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">
+        <div className="space-y-2">
+          <label className="block text-sm font-semibold text-[var(--text-secondary)] ml-1">
             Nomor HP
           </label>
           <input
@@ -68,13 +70,13 @@ export default function LoginPage() {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             placeholder="08xxxxxxxxxx"
-            className="w-full px-4 py-4 bg-[var(--bg-tertiary)] border border-[var(--border-default)] rounded-xl text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)] text-lg"
+            className="input text-lg py-4"
             required
           />
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">
+        <div className="space-y-2">
+          <label className="block text-sm font-semibold text-[var(--text-secondary)] ml-1">
             Password
           </label>
           <input
@@ -82,7 +84,7 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Masukkan password"
-            className="w-full px-4 py-4 bg-[var(--bg-tertiary)] border border-[var(--border-default)] rounded-xl text-[var(--text-primary)] placeholder:text-[var(--text-muted)] focus:outline-none focus:border-[var(--accent)] text-lg"
+            className="input text-lg py-4"
             required
           />
         </div>
@@ -90,12 +92,12 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={$isLoading}
-          className="w-full py-4 bg-[var(--accent)] text-[var(--text-inverse)] rounded-xl font-bold text-lg disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[var(--accent-hover)] transition-colors mt-6"
+          className="btn btn-primary w-full py-5 text-lg shadow-lg shadow-[var(--accent)]/30 mt-4"
         >
           {$isLoading ? (
-            <span className="flex items-center justify-center gap-2">
+            <span className="flex items-center justify-center gap-3">
               <svg
-                className="w-5 h-5 animate-spin"
+                className="w-6 h-6 animate-spin"
                 fill="none"
                 viewBox="0 0 24 24"
               >
@@ -122,12 +124,12 @@ export default function LoginPage() {
       </form>
 
       {/* Register Link */}
-      <div className="text-center mt-8">
+      <div className="text-center mt-10">
         <p className="text-[var(--text-secondary)]">
           Belum punya akun?{" "}
           <a
             href="/register"
-            className="text-[var(--accent)] font-semibold hover:underline"
+            className="text-[var(--accent)] font-bold hover:underline"
           >
             Daftar Sekarang
           </a>
@@ -135,12 +137,25 @@ export default function LoginPage() {
       </div>
 
       {/* Skip Login */}
-      <div className="text-center mt-4">
+      <div className="text-center mt-6">
         <a
           href="/"
-          className="text-[var(--text-muted)] text-sm hover:text-[var(--text-secondary)]"
+          className="text-[var(--text-muted)] text-sm font-medium hover:text-[var(--text-secondary)] flex items-center justify-center gap-1"
         >
-          Lanjutkan tanpa login →
+          Lanjutkan tanpa login
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
         </a>
       </div>
     </div>

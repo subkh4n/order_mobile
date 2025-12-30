@@ -77,7 +77,7 @@ export default function ProductCard({
   };
 
   return (
-    <div className="flex flex-col bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-light)] group transition-all duration-300 active:scale-[0.98] hover:border-[var(--accent)] hover:shadow-lg hover:shadow-[var(--accent)]/10">
+    <div className="flex flex-col bg-[var(--bg-secondary)] rounded-2xl overflow-hidden border border-[var(--border-light)] group transition-all duration-300 active:scale-[0.98] hover:border-[var(--accent)] hover:shadow-lg hover:shadow-[var(--accent)]/10 h-full">
       {/* Image Container */}
       <div className="relative aspect-[4/3] overflow-hidden bg-[var(--bg-tertiary)]">
         {imageUrl && !imgError ? (
@@ -89,22 +89,22 @@ export default function ProductCard({
             onError={() => setImgError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-4xl">
+          <div className="w-full h-full flex items-center justify-center text-4xl opacity-20">
             🍽️
           </div>
         )}
 
         {/* Healthy Badge */}
         {isHealthy && (
-          <div className="absolute top-2 left-2 bg-[var(--success)]/90 text-white text-[8px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wide">
+          <div className="absolute top-2 left-2 bg-[var(--success)]/90 text-white text-[8px] font-bold px-2 py-1 rounded-md uppercase tracking-wide shadow-md">
             HEALTHY
           </div>
         )}
 
         {/* Out of Stock Overlay */}
         {isOutOfStock && (
-          <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-            <span className="bg-[var(--error)] text-white text-xs font-semibold px-3 py-1 rounded-full">
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px] flex items-center justify-center z-10">
+            <span className="bg-[var(--error)] text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
               Habis
             </span>
           </div>
@@ -112,33 +112,34 @@ export default function ProductCard({
 
         {/* Quantity Badge */}
         {quantityInCart > 0 && (
-          <div className="absolute top-2 right-2 bg-[var(--accent)] text-[var(--text-inverse)] w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold animate-in zoom-in shadow-lg">
+          <div className="absolute top-2 right-2 bg-[var(--accent)] text-[var(--text-inverse)] w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold animate-in zoom-in shadow-lg border-2 border-[var(--bg-secondary)] z-20">
             {quantityInCart}
           </div>
         )}
       </div>
 
       {/* Content */}
-      <div className="p-3">
-        <h4 className="font-bold text-xs text-[var(--text-primary)] truncate mb-2">
+      <div className="p-4 flex flex-col flex-1 gap-2">
+        <h4 className="font-bold text-sm text-[var(--text-primary)] line-clamp-2 leading-tight group-hover:text-[var(--accent)] transition-colors flex-1">
           {name}
         </h4>
-        <div className="flex justify-between items-center">
-          <span className="text-[var(--accent)] font-bold text-sm">
+
+        <div className="flex justify-between items-center mt-auto pt-2 border-t border-[var(--border-light)]">
+          <span className="text-[var(--accent)] font-black text-sm">
             {formatRupiah(price)}
           </span>
           <button
             onClick={handleAddToCart}
             disabled={isOutOfStock}
-            className={`w-7 h-7 rounded-lg flex items-center justify-center transition-all duration-200 ${
+            className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-300 ${
               isOutOfStock
                 ? "bg-[var(--bg-tertiary)] text-[var(--text-muted)] cursor-not-allowed"
-                : "bg-[var(--accent)] text-[var(--text-inverse)] hover:scale-110 active:scale-95 shadow-md shadow-[var(--accent)]/30"
+                : "bg-[var(--accent)] text-[var(--text-inverse)] hover:scale-110 active:scale-95 shadow-lg shadow-[var(--accent)]/30"
             }`}
             aria-label={isOutOfStock ? "Stok habis" : "Tambah ke keranjang"}
           >
             <svg
-              className="w-4 h-4"
+              className="w-4.5 h-4.5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

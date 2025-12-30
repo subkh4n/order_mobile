@@ -123,9 +123,9 @@ export default function HomePage() {
   }
 
   return (
-    <div className="flex flex-col gap-10 animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="flex flex-col gap-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* ========== HEADER ========== */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-2">
         <div className="flex flex-col">
           <div className="flex items-center gap-1 text-[var(--accent)] mb-0.5">
             <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -210,7 +210,7 @@ export default function HomePage() {
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent)] to-[var(--accent-active)]" />
         )}
-        <div className="absolute bottom-0 left-0 w-full z-20 p-5">
+        <div className="absolute bottom-0 left-0 w-full z-20 p-6">
           <span className="inline-block bg-[var(--accent)] text-[var(--text-inverse)] text-[10px] font-bold px-2 py-0.5 rounded-md uppercase tracking-wider mb-2 shadow-lg shadow-[var(--accent)]/30">
             30% OFF
           </span>
